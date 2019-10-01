@@ -67,11 +67,12 @@ class Vehicle {
   // A method that calculates a steering force towards a target
   // STEER = DESIRED MINUS VELOCITY
   void seek(PVector _target) {
-    //line(location.x,location.y,_target.x,_target.y);
     PVector desired = PVector.sub(_target, location);  // A vector pointing from the location to the target
+    
     // Normalize desired and scale to maximum speed
     desired.normalize();
     desired.mult(maxspeed);
+    
     // Steering = Desired minus velocity
     PVector steer = PVector.sub(desired, velocity);
     steer.limit(maxforce);  // Limit to maximum steering force
@@ -81,9 +82,11 @@ class Vehicle {
 
   void flee(PVector _target) {
     PVector desired = PVector.sub(_target, location);  // A vector pointing from the location to the target
+    
     // Normalize desired and scale to maximum speed
     desired.normalize();
     desired.mult(-1*maxspeed);
+    
     // Steering = Desired minus velocity
     PVector steer = PVector.sub(desired, velocity);
     steer.limit(maxforce);  // Limit to maximum steering force
@@ -96,6 +99,7 @@ class Vehicle {
     float wanderD = 40;         // Distance for our "wander circle"
     float change = 0.3;
     wandertheta += random(-change, change);     // Randomly change wander theta
+    
     // Now we have to calculate the new location to steer towards on the wander circle
     PVector circleloc = velocity.get();    // Start with velocity
     circleloc.normalize();            // Normalize to get heading
@@ -110,10 +114,12 @@ class Vehicle {
   void arrive(PVector _target) {
     PVector desired = PVector.sub(_target, location);  // A vector pointing from the location to the target
     float d = desired.mag();
+    
     // Normalize desired and scale with arbitrary damping within 100 pixels
     desired.normalize();
     float m = map(d, 0, 100, 0, maxspeed);
     desired.mult(m);
+    
     // Steering = Desired minus Velocity
     PVector steer = PVector.sub(desired, velocity);
     steer.limit(maxforce);  // Limit to maximum steering force
